@@ -27,11 +27,7 @@ def uniform_cost_search(graph, start, goal):
     return None, float('inf')
 
 
-# -----------------------------------------------------
-# INTERACTIVE TESTING SECTION 
-# -----------------------------------------------------
 
-# Sample graph to test with
 toy_graph = {
     'A': {'B': 2, 'C': 4},
     'B': {'D': 1, 'E': 5},
