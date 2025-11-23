@@ -1,21 +1,13 @@
 import heapq
 
 def uniform_cost_search(graph, start, goal):
-    """
-    Uniform Cost Search: Finds lowest-cost path from start to goal.
-    
-    :param graph: Dict {node: {neighbor: cost}}
-    :param start, goal: Nodes
-    :return: (path list, total_cost) or None if no path
-    """
     if start not in graph or goal not in graph:
         return None, float('inf')
     
     if start == goal:
         return [start], 0
     
-    open_set = [(0, start, [start])]  # (g, node, path)
-    came_from = {start: None}
+    open_set = [(0, start, [start])]
     g_score = {start: 0}
     
     while open_set:
@@ -29,8 +21,41 @@ def uniform_cost_search(graph, start, goal):
             
             if tentative_g < g_score.get(neighbor, float('inf')):
                 g_score[neighbor] = tentative_g
-                came_from[neighbor] = current
                 new_path = path + [neighbor]
                 heapq.heappush(open_set, (tentative_g, neighbor, new_path))
     
     return None, float('inf')
+
+
+# -----------------------------------------------------
+# INTERACTIVE TESTING SECTION 
+# -----------------------------------------------------
+
+# Sample graph to test with
+toy_graph = {
+    'A': {'B': 2, 'C': 4},
+    'B': {'D': 1, 'E': 5},
+    'C': {'D': 3},
+    'D': {'E': 2},
+    'E': {'F': 6},
+    'F':{}
+}
+
+print("\n--- UNIFORM COST SEARCH TESTER ---")
+print("Available nodes:", list(toy_graph.keys()))
+print("-----------------------------------\n")
+
+# Take user input
+start = input("Enter the START node: ").strip().upper()
+goal = input("Enter the GOAL node: ").strip().upper()
+
+# Run the search
+path, cost = uniform_cost_search(toy_graph, start, goal)
+
+# Show results
+print("\n--- RESULT ---")
+if path is None:
+    print("No path found. Maybe the nodes are not connected or spelled wrong.")
+else:
+    print("Cheapest Path:", " -> ".join(path))
+    print("Total Cost:", cost)
